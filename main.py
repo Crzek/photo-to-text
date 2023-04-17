@@ -13,6 +13,16 @@ from PIL import Image
 # url = "https://translate.google.com/m?hl=en&sl=en&tl=es&ie=UTF-8&prev=_m&q=" + text
 # response = requests.get(url, headers=headers)
 # print(response.content)
+def formater(text: str, leter=1):
+    while "\nO" in text:
+        text = text.replace("\nO", f"\n{leter}) ", 1)
+        leter += 1
+
+    while "\n©" in text:
+        text = text.replace("\n©", f"\n{leter}) ", 1)
+        leter += 1
+
+    return text
 
 
 PATH_FOTO = "C:\\Users\\ERICK\\Pictures\\Screenpresso"
@@ -23,8 +33,18 @@ files = sorted(files, key=lambda x: os.path.getmtime(
 img = Image.open(os.path.join(PATH_FOTO, files[1]))
 
 texto = pytesseract.image_to_string(img)
-print(texto)
-traductor = Translator()
-texto_traducido = traductor.translate(texto, dest='es').text
+texto1 = formater(texto)
+print("----")
+print("")
+print("-----INGLES-----")
+print(texto1)
 
+traductor = Translator()
+texto_traducido = traductor.translate(texto1, dest='es').text
+
+print("")
+print("")
+print("++++++")
+
+print("---ESPA---")
 print(texto_traducido)
