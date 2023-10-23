@@ -23,8 +23,16 @@ files = sorted(files, key=lambda x: os.path.getmtime(
 img = Image.open(os.path.join(PATH_FOTO, files[1]))
 
 texto = pytesseract.image_to_string(img)
+print("-------")
 print(texto)
-traductor = Translator()
-texto_traducido = traductor.translate(texto, dest='es').text
+print("-------")
 
-print(texto_traducido)
+# traducir texto
+try:
+    traductor = Translator()
+    texto_spain = traductor.translate(texto, dest='es').text
+    print(texto_spain)
+
+# catch Exception as e:
+except Exception as e:
+    print(e)
