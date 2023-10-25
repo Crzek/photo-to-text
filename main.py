@@ -25,12 +25,30 @@ def formater(text: str, leter=1):
     return text
 
 
+def onlyFoto(file: str) -> bool:
+    """
+    input : srt -> nombre del archivo, si es carpeta no tiene extencion
+    return : True o False
+    """
+    if (".png" in file) or (".jpg" in file):
+        return True
+    else:
+        return False
+
+
 PATH_FOTO = "C:\\Users\\ERICK\\Pictures\\Screenpresso"
+
 files = os.listdir(PATH_FOTO)
 files = sorted(files, key=lambda x: os.path.getmtime(
     os.path.join(PATH_FOTO, x)), reverse=True)
+foto = False
+i = 0
+while (not foto):
+    if (onlyFoto(files[i])):  # png y jpj
+        img = Image.open(os.path.join(PATH_FOTO, files[i]))
+        foto = True
+    i += 1
 
-img = Image.open(os.path.join(PATH_FOTO, files[1]))
 
 texto = pytesseract.image_to_string(img)
 texto1 = formater(texto)
